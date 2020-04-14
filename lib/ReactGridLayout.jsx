@@ -91,6 +91,7 @@ export default class ReactGridLayout extends React.Component<Props, State> {
     maxRows: Infinity, // infinite vertical growth
     layout: [],
     margin: [10, 10],
+    lastMoved: Date.now(),
     isDraggable: true,
     isResizable: true,
     isDroppable: false,
@@ -116,13 +117,14 @@ export default class ReactGridLayout extends React.Component<Props, State> {
 
   state: State = {
     activeDrag: null,
-    layout: synchronizeLayoutWithChildren(
-      this.props.layout,
-      this.props.children,
-      this.props.cols,
-      // Legacy support for verticalCompact: false
-      compactType(this.props)
-    ),
+    // layout: synchronizeLayoutWithChildren(
+    //  this.props.layout,
+    //  this.props.children,
+    //  this.props.cols,
+    // Legacy support for verticalCompact: false
+    //  compactType(this.props)
+    // ),
+    layout: this.props.layout,
     mounted: false,
     oldDragItem: null,
     oldLayout: null,
@@ -245,6 +247,9 @@ export default class ReactGridLayout extends React.Component<Props, State> {
     const { layout } = this.state;
     var l = getLayoutItem(layout, i);
     if (!l) return;
+
+    // PARSEC EDIT -> makes it so that a clicked item comes to front
+    l.lastMoved = Math.round(Date.now() / 1000);
 
     this.setState({
       oldDragItem: cloneLayoutItem(l),
