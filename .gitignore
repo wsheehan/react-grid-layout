@@ -3,10 +3,24 @@ dist/*
 !dist/react-grid-layout.min*
 !dist/*.html
 npm-debug.log
-build/
+#build/
 .idea
 # Ignore built example files
 examples/*.html
 examples/*.js
 !examples/generate.js
 !examples/vars.js
+
+# from npmignore
+test/
+examples/
+dist/
+yarn.lock
+.github
+*.config.js
+Makefile
+*.sh
+*.*.json
+__tests__/
+index-dev.js
+index.html
