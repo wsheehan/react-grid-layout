@@ -43,7 +43,7 @@ function ownKeys(object, enumerableOnly) {
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
     if (enumerableOnly)
-      symbols = symbols.filter(function(sym) {
+      symbols = symbols.filter(function (sym) {
         return Object.getOwnPropertyDescriptor(object, sym).enumerable;
       });
     keys.push.apply(keys, symbols);
@@ -55,13 +55,13 @@ function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
     if (i % 2) {
-      ownKeys(Object(source), true).forEach(function(key) {
+      ownKeys(Object(source), true).forEach(function (key) {
         _defineProperty(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      ownKeys(Object(source)).forEach(function(key) {
+      ownKeys(Object(source)).forEach(function (key) {
         Object.defineProperty(
           target,
           key,
@@ -143,6 +143,7 @@ function cloneLayoutItem(
     maxH: layoutItem.maxH,
     moved: Boolean(layoutItem.moved),
     lastMoved: layoutItem.lastMoved,
+    fullscreen: layoutItem.fullscreen,
     static: Boolean(layoutItem.static),
     // These can be null
     isDraggable: layoutItem.isDraggable,
@@ -162,10 +163,10 @@ function childrenEqual(
 ) {
   /*: boolean*/
   return (0, _lodash.default)(
-    _react.default.Children.map(a, function(c) {
+    _react.default.Children.map(a, function (c) {
       return c.key;
     }),
-    _react.default.Children.map(b, function(c) {
+    _react.default.Children.map(b, function (c) {
       return c.key;
     })
   );
@@ -285,7 +286,7 @@ function resolveCompactionCollision(
   var sizeProp = heightWidth[axis];
   item[axis] += 1;
   var itemIndex = layout
-    .map(function(layoutItem) {
+    .map(function (layoutItem) {
       return layoutItem.i;
     })
     .indexOf(item.i); // Go through each item we collide with.
@@ -446,7 +447,7 @@ function getAllCollisions(
   /*: LayoutItem*/
 ) {
   /*: Array<LayoutItem>*/
-  return layout.filter(function(l) {
+  return layout.filter(function (l) {
     return collides(l, layoutItem);
   });
 }
@@ -461,7 +462,7 @@ function getStatics(
   /*: Layout*/
 ) {
   /*: Array<LayoutItem>*/
-  return layout.filter(function(l) {
+  return layout.filter(function (l) {
     return l.static;
   });
 }
@@ -604,14 +605,14 @@ function moveElementAwayFromCollision(
     isUserAction = false; // Make a mock item so we don't modify the item here, only modify in moveElement.
 
     var fakeItem =
-      /*: LayoutItem*/
-      {
-        x: compactH ? Math.max(collidesWith.x - itemToMove.w, 0) : itemToMove.x,
-        y: compactV ? Math.max(collidesWith.y - itemToMove.h, 0) : itemToMove.y,
-        w: itemToMove.w,
-        h: itemToMove.h,
-        i: "-1"
-      }; // No collision? If so, we can go up there; otherwise, we'll end up moving down as normal
+    /*: LayoutItem*/
+    {
+      x: compactH ? Math.max(collidesWith.x - itemToMove.w, 0) : itemToMove.x,
+      y: compactV ? Math.max(collidesWith.y - itemToMove.h, 0) : itemToMove.y,
+      w: itemToMove.w,
+      h: itemToMove.h,
+      i: "-1"
+    }; // No collision? If so, we can go up there; otherwise, we'll end up moving down as normal
 
     if (!getFirstCollision(layout, fakeItem)) {
       log(
@@ -716,7 +717,7 @@ function sortLayoutItemsByRowCol(
   /*: Layout*/
 ) {
   /*: Layout*/
-  return [].concat(layout).sort(function(a, b) {
+  return [].concat(layout).sort(function (a, b) {
     if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
       return 1;
     } else if (a.y === b.y && a.x === b.x) {
@@ -733,7 +734,7 @@ function sortLayoutItemsByColRow(
   /*: Layout*/
 ) {
   /*: Layout*/
-  return [].concat(layout).sort(function(a, b) {
+  return [].concat(layout).sort(function (a, b) {
     if (a.x > b.x || (a.x === b.x && a.y > b.y)) {
       return 1;
     }
@@ -768,7 +769,7 @@ function synchronizeLayoutWithChildren(
     /*: Layout*/
     [];
 
-  _react.default.Children.forEach(children, function(
+  _react.default.Children.forEach(children, function (
     child,
     /*: ReactElement<any>*/
     i
@@ -783,7 +784,7 @@ function synchronizeLayoutWithChildren(
       if (!isProduction && child.props._grid) {
         console.warn(
           "`_grid` properties on children have been deprecated as of React 15.2. " + // eslint-disable-line
-            "Please use `data-grid` or add your properties directly to the `layout`."
+          "Please use `data-grid` or add your properties directly to the `layout`."
         );
       }
 
@@ -847,12 +848,12 @@ function validateLayout(
       if (typeof item[subProps[j]] !== "number") {
         throw new Error(
           "ReactGridLayout: " +
-            contextName +
-            "[" +
-            i +
-            "]." +
-            subProps[j] +
-            " must be a number!"
+          contextName +
+          "[" +
+          i +
+          "]." +
+          subProps[j] +
+          " must be a number!"
         );
       }
     }
@@ -866,10 +867,10 @@ function validateLayout(
     if (item.static !== undefined && typeof item.static !== "boolean") {
       throw new Error(
         "ReactGridLayout: " +
-          contextName +
-          "[" +
-          i +
-          "].static must be a boolean!"
+        contextName +
+        "[" +
+        i +
+        "].static must be a boolean!"
       );
     }
   }
@@ -894,7 +895,7 @@ function autoBindHandlers(
   /*: Array<string>*/
 ) {
   /*: void*/
-  fns.forEach(function(key) {
+  fns.forEach(function (key) {
     return (el[key] = el[key].bind(el));
   });
 }
@@ -907,6 +908,6 @@ function log() {
   (_console = console).log.apply(_console, arguments);
 }
 
-var noop = function noop() {};
+var noop = function noop() { };
 
 exports.noop = noop;
