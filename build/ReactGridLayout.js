@@ -49,7 +49,7 @@ function ownKeys(object, enumerableOnly) {
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
     if (enumerableOnly)
-      symbols = symbols.filter(function(sym) {
+      symbols = symbols.filter(function (sym) {
         return Object.getOwnPropertyDescriptor(object, sym).enumerable;
       });
     keys.push.apply(keys, symbols);
@@ -61,13 +61,13 @@ function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
     if (i % 2) {
-      ownKeys(Object(source), true).forEach(function(key) {
+      ownKeys(Object(source), true).forEach(function (key) {
         _defineProperty(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      ownKeys(Object(source)).forEach(function(key) {
+      ownKeys(Object(source)).forEach(function (key) {
         Object.defineProperty(
           target,
           key,
@@ -139,8 +139,8 @@ function _getPrototypeOf(o) {
   _getPrototypeOf = Object.setPrototypeOf
     ? Object.getPrototypeOf
     : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-      };
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
   return _getPrototypeOf(o);
 }
 
@@ -193,7 +193,7 @@ var isFirefox = false; // Try...catch will protect from navigator not existing (
 
 try {
   isFirefox = /firefox/i.test(navigator.userAgent);
-} catch (e) {}
+} catch (e) { }
 /* Ignore */
 
 /**
@@ -202,7 +202,7 @@ try {
 
 var ReactGridLayout =
   /*#__PURE__*/
-  (function(_React$Component) {
+  (function (_React$Component) {
     _inherits(ReactGridLayout, _React$Component);
 
     // TODO publish internal ReactClass displayName transform
@@ -243,7 +243,7 @@ var ReactGridLayout =
 
       _defineProperty(_assertThisInitialized(_this), "dragEnterCounter", 0);
 
-      _defineProperty(_assertThisInitialized(_this), "onDragOver", function(
+      _defineProperty(_assertThisInitialized(_this), "onDragOver", function (
         e
         /*: DragOverEvent*/
       ) {
@@ -278,15 +278,15 @@ var ReactGridLayout =
 
         if (!_this.state.droppingDOMNode) {
           var positionParams =
-            /*: PositionParams*/
-            {
-              cols: cols,
-              margin: margin,
-              maxRows: maxRows,
-              rowHeight: rowHeight,
-              containerWidth: width,
-              containerPadding: containerPadding || margin
-            };
+          /*: PositionParams*/
+          {
+            cols: cols,
+            margin: margin,
+            maxRows: maxRows,
+            rowHeight: rowHeight,
+            containerWidth: width,
+            containerPadding: containerPadding || margin
+          };
           var calculatedPosition = (0, _calculateUtils.calcXY)(
             positionParams,
             layerY,
@@ -329,13 +329,13 @@ var ReactGridLayout =
       _defineProperty(
         _assertThisInitialized(_this),
         "removeDroppingPlaceholder",
-        function() {
+        function () {
           var _this$props2 = _this.props,
             droppingItem = _this$props2.droppingItem,
             cols = _this$props2.cols;
           var layout = _this.state.layout;
           var newLayout = (0, _utils.compact)(
-            layout.filter(function(l) {
+            layout.filter(function (l) {
               return l.i !== droppingItem.i;
             }),
             (0, _utils.compactType)(_this.props),
@@ -351,7 +351,7 @@ var ReactGridLayout =
         }
       );
 
-      _defineProperty(_assertThisInitialized(_this), "onDragLeave", function() {
+      _defineProperty(_assertThisInitialized(_this), "onDragLeave", function () {
         _this.dragEnterCounter--; // onDragLeave can be triggered on each layout's child.
         // But we know that count of dragEnter and dragLeave events
         // will be balanced after leaving the layout's container
@@ -363,11 +363,11 @@ var ReactGridLayout =
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onDragEnter", function() {
+      _defineProperty(_assertThisInitialized(_this), "onDragEnter", function () {
         _this.dragEnterCounter++;
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onDrop", function(
+      _defineProperty(_assertThisInitialized(_this), "onDrop", function (
         e
         /*: Event*/
       ) {
@@ -375,9 +375,9 @@ var ReactGridLayout =
         var layout = _this.state.layout;
 
         var _ref =
-            layout.find(function(l) {
-              return l.i === droppingItem.i;
-            }) || {},
+          layout.find(function (l) {
+            return l.i === droppingItem.i;
+          }) || {},
           x = _ref.x,
           y = _ref.y,
           w = _ref.w,
@@ -699,7 +699,7 @@ var ReactGridLayout =
                   w: w,
                   h: h
                 })
-              ).filter(function(layoutItem) {
+              ).filter(function (layoutItem) {
                 return layoutItem.i !== l.i;
               });
               hasCollisions = collisions.length > 0; // If we're colliding, we need adjust the placeholder.
@@ -708,7 +708,7 @@ var ReactGridLayout =
                 // adjust w && h to maximum allowed space
                 var leastX = Infinity,
                   leastY = Infinity;
-                collisions.forEach(function(layoutItem) {
+                collisions.forEach(function (layoutItem) {
                   if (layoutItem.x > l.x)
                     leastX = Math.min(leastX, layoutItem.x);
                   if (layoutItem.y > l.y)
@@ -786,8 +786,7 @@ var ReactGridLayout =
         },
         {
           key: "placeholder",
-          value: function placeholder() /*: ?ReactElement<any>*/
-          {
+          value: function placeholder() /*: ?ReactElement<any>*/ {
             var activeDrag = this.state.activeDrag;
             if (!activeDrag) return null;
             var _this$props5 = this.props,
@@ -836,8 +835,7 @@ var ReactGridLayout =
             /*: ReactElement<any>*/
             isDroppingItem
             /*: boolean*/
-          ) /*: ?ReactElement<any>*/
-          {
+          ) /*: ?ReactElement<any>*/ {
             if (!child || !child.key) return;
             var l = (0, _utils.getLayoutItem)(
               this.state.layout,
@@ -941,12 +939,12 @@ var ReactGridLayout =
                 onDragEnter: isDroppable ? this.onDragEnter : _utils.noop,
                 onDragOver: isDroppable ? this.onDragOver : _utils.noop
               },
-              _react.default.Children.map(this.props.children, function(child) {
+              _react.default.Children.map(this.props.children, function (child) {
                 return _this2.processGridItem(child);
               }),
               isDroppable &&
-                this.state.droppingDOMNode &&
-                this.processGridItem(this.state.droppingDOMNode, true),
+              this.state.droppingDOMNode &&
+              this.processGridItem(this.state.droppingDOMNode, true),
               this.placeholder()
             );
           }
@@ -1032,6 +1030,7 @@ _defineProperty(ReactGridLayout, "defaultProps", {
   layout: [],
   margin: [10, 10],
   lastMoved: Date.now(),
+  fullscreen: false,
   isDraggable: true,
   isResizable: true,
   isDroppable: false,

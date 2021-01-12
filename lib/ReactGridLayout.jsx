@@ -92,6 +92,7 @@ export default class ReactGridLayout extends React.Component<Props, State> {
     layout: [],
     margin: [10, 10],
     lastMoved: Date.now(),
+    fullscreen: false,
     isDraggable: true,
     isResizable: true,
     isDroppable: false,
