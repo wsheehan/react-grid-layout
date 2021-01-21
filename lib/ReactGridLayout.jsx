@@ -364,6 +364,9 @@ export default class ReactGridLayout extends React.Component<Props, State> {
     var l = getLayoutItem(layout, i);
     if (!l) return;
 
+    // PARSEC EDIT -> makes it so that a resized item comes to front
+    l.lastMoved = Math.round(Date.now() / 1000);
+
     this.setState({
       oldResizeItem: cloneLayoutItem(l),
       oldLayout: this.state.layout
